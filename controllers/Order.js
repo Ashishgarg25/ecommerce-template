@@ -5,7 +5,7 @@ const createOrder = async (req, res) => {
     const {
       shop,
       owner,
-      customer,
+      owner_email,
       product,
       total,
       shipping_fees,
@@ -17,7 +17,7 @@ const createOrder = async (req, res) => {
     if (
       !shop ||
       !owner ||
-      !customer ||
+      !owner_email ||
       product.length === 0 ||
       !total ||
       !shipping_fees ||
@@ -32,7 +32,7 @@ const createOrder = async (req, res) => {
     const order = new Order({
         shop,
         owner,
-        customer,
+        owner_email,
         product,
         total,
         shipping_fees,
@@ -71,7 +71,7 @@ const updateOrder = async (req, res) => {
     const {
         shop,
         owner,
-        customer,
+        owner_email,
         product,
         total,
         shipping_fees,
@@ -85,7 +85,7 @@ const updateOrder = async (req, res) => {
     if (
         !shop ||
         !owner ||
-        !customer ||
+        !owner_email ||
         product.length === 0 ||
         !total ||
         !shipping_fees ||

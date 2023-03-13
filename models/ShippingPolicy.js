@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 const { Schema, model } = mongoose;
 
 const shippingPolicys = new Schema({
@@ -11,4 +11,4 @@ const shippingPolicys = new Schema({
     },
 }, { timestamps: true });
 
-export default model("ShippingPolicys", shippingPolicys);
+module.exports = mongoose.model("ShippingPolicys", shippingPolicys);

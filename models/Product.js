@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 const { Schema, model } = mongoose;
 
 const variant_types = Object.freeze({
@@ -60,7 +60,6 @@ const products = new Schema({
   },
   media: [
     {
-      id: new mongoose.Types.ObjectId(),
       thumbnail: String
     }
   ],
@@ -74,7 +73,6 @@ const products = new Schema({
   },
   tag: [
     {
-      _id: new mongoose.Types.ObjectId(),
       name: String,
       slug: String
     }
@@ -93,4 +91,4 @@ const products = new Schema({
 
 }, { timestamps: true });
 
-export default model("Products", products);
+module.exports = mongoose.model("Products", products);

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose')
 const { Schema, model } = mongoose;
 
 const order_status = new Schema({
@@ -21,14 +21,21 @@ const order_status = new Schema({
 
 const orders = new Schema(
   {
-    customer: {
-      id: Schema.Types.ObjectId,
-      email: String,
+    owner_email: {
+      type: String,
+      required: true,
+    },
+    owner: {
+      type: String,
+      required: true,
+    },
+    shop: {
+      type: String,
       required: true,
     },
     product: [
       {
-        _id: Schema.Types.ObjectId,
+        id: String,
         name: String,
         quantity: Number,
         price: Number,
@@ -67,4 +74,4 @@ const orders = new Schema(
   { timestamps: true }
 );
 
-export default model("Orders", orders);
+module.exports = mongoose.model("Orders", orders);

@@ -10,6 +10,10 @@ ConnectToMongoDB();
 
 // Import Routes
 // const userRouter = require('./routes/user');
+const userRoutes = require('./routes/Users');
+const shopRoutes = require('./routes/Shop');
+const productRoutes = require('./routes/Products');
+const orderRoutes = require('./routes/Order');
 
 const app = express();
 app.use(express.json())
@@ -19,10 +23,10 @@ app.use(express.json())
 
 const appVersion = '/api/v1';
 
-// app.use(`${appVersion}/user`, userRouter);
-// app.use(`${appVersion}/post`, postRouter);
-// app.use(`${appVersion}/job`, jobRouter);
-// app.use(`${appVersion}/chat`, chatRouter);
+app.use(`${appVersion}/user`, userRoutes)
+app.use(`${appVersion}/product`, productRoutes)
+app.use(`${appVersion}/order`, orderRoutes)
+app.use(`${appVersion}/shop`, shopRoutes)
 
 // app.use(
 //     '/api-docs',
