@@ -38,9 +38,6 @@ app.get("/", (req, res) => {
     res.send(`<body style='background-color: #1E293B; padding: 16px'><h4 style='font-weight: 500; color: #FFFFFF'>Application in Development. Please find the API Docs at <a href =${process.env.URL || 'http://localhost'}:${process.env.PORT}/api-docs style='color: #FFFFFF'>Ecommerce API Docs</a></h4></body>`);
   });
 
-const port = process.env.PORT || 8000;
-app.listen(port, () => console.log(`Server started on PORT ${port}`));
-
 
 // FOR PRODUCTION
 // http.createServer(app).listen(port, (req, res) => {

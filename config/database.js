@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const MongoURI = process.env.MONGO_URI;
+const port = process.env.PORT || 8000;
 
 const ConnectToMongoDB = () => {
   mongoose
@@ -12,6 +13,7 @@ const ConnectToMongoDB = () => {
       useUnifiedTopology: true,
     })
     .then(() => {
+      app.listen(port, () => console.log(`Server started on PORT ${port}`));
       console.log("MongoDB Connection Successfully!");
     })
     .catch((err) => console.log(`Error ${err}`));
