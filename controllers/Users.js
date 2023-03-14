@@ -14,7 +14,12 @@ const signup = async (req, res) => {
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const data = await User.create({ name, email, password: hashedPassword, isActive: true });
+    const data = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      isActive: true,
+    });
 
     if (data) {
       const token = JWT.sign(
@@ -91,9 +96,6 @@ const signin = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-
-     console.log(req.user)
-
     const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(400).json({
@@ -105,10 +107,20 @@ const updateUser = async (req, res) => {
     const { phone, address } = req.body;
 
     if (phone) user.phone = phone;
+
     if (address) {
-      if (user.address.length > 0) {
-        await User.updateOne({ 'user.address._id': user.address._id }, { $push: { address: address } }, { safe: true, upsert: true });
-      } else user.address = address;
+      await User.updateOne(
+        {
+          _id: req.user.userId,
+        },
+        {
+          $set: { address: address },
+        },
+        {
+          upsert: true,
+          runValidators: true,
+        }
+      );
     }
 
     const updatedUser = await user.save();
@@ -178,12 +190,11 @@ const forgotPassword = async (req, res) => {
     // await SEND_MAIL(subject, mailBody, sendTo, mailSender);
 
     return res.status(201).json({
-        message: {
-          text: `Reset Password link sent on ${email}!`,
-          variant: "success",
-        },
-      });
-
+      message: {
+        text: `Reset Password link sent on ${email}!`,
+        variant: "success",
+      },
+    });
   } catch (e) {
     console.log(e);
     return res.status(500).json({
