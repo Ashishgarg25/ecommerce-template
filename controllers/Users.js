@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     if (!name || !email || !password) {
       return res
@@ -17,6 +17,7 @@ const signup = async (req, res) => {
     const data = await User.create({
       name,
       email,
+      role,
       password: hashedPassword,
       isActive: true,
     });
@@ -30,6 +31,7 @@ const signup = async (req, res) => {
       const response = {
         name,
         email,
+        role,
         token,
         isActive: data.isActive,
       };
@@ -82,6 +84,7 @@ const signin = async (req, res) => {
     return res.status(201).json({
       name: data.name,
       email: data.email,
+      role: data.role,
       token,
       isActive: data.isActive,
     });

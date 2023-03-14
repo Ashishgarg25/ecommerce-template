@@ -14,6 +14,7 @@ const userRoutes = require('./routes/Users');
 const shopRoutes = require('./routes/Shop');
 const productRoutes = require('./routes/Products');
 const orderRoutes = require('./routes/Order');
+const blogRoutes = require('./routes/Blog');
 
 const app = express();
 app.use(express.json())
@@ -27,6 +28,7 @@ app.use(`${appVersion}/user`, userRoutes)
 app.use(`${appVersion}/product`, productRoutes)
 app.use(`${appVersion}/order`, orderRoutes)
 app.use(`${appVersion}/shop`, shopRoutes)
+app.use(`${appVersion}/post`, blogRoutes)
 
 app.get('/', function(req, res){
   res.send(`<body style='background-color: #1E293B; padding: 16px'><h4 style='font-weight: 500; color: #FFFFFF'>Application in Development. Ecommerce Template </h4></body>`);

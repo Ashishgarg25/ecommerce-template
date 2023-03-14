@@ -1,6 +1,11 @@
 const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
+const role_types = Object.freeze({
+  customer: "customer",
+  admin: "admin",
+});
+
 const users = new Schema(
   {
     name: {
@@ -11,6 +16,10 @@ const users = new Schema(
       type: String,
       required: true,
       unique: true,
+    },
+    role: {
+      type: Object.values(role_types),
+      required: "Role is required"
     },
     phone: {
       type: String,
