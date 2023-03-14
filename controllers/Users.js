@@ -107,7 +107,7 @@ const updateUser = async (req, res) => {
     if (phone) user.phone = phone;
     if (address) {
       if (user.address.length > 0) {
-        await user.update({ _id: user._id }, { $push: { address: address } });
+        await User.updateOne({ 'user.address._id': user.address._id }, { $push: { address: address } }, { safe: true, upsert: true });
       } else user.address = address;
     }
 
