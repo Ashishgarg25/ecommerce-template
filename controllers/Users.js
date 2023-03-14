@@ -13,9 +13,8 @@ const signup = async (req, res) => {
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
-    password = hashedPassword;
 
-    const data = await User.create({ name, email, password, isActive: true });
+    const data = await User.create({ name, email, password: hashedPassword, isActive: true });
 
     if (data) {
       const token = JWT.sign(
