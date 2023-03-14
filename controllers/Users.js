@@ -91,7 +91,10 @@ const signin = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const user = await User.findById(req.user._id);
+
+     console.log(req.user)
+
+    const user = await User.findById(req.user.userId);
     if (!user) {
       return res.status(400).json({
         variant: "error",

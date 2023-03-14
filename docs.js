@@ -27,8 +27,8 @@ REQ_BODY = {
       title: String,
       default: Boolean,
       address: {
-        lat: String,
-        lng: String,
+        lat: Number,
+        lng: Number,
         formatted_address: String,
       },
     },
