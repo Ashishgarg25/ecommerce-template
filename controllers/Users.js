@@ -26,7 +26,7 @@ const signup = async (req, res) => {
         name,
         email,
         token,
-        isActive,
+        isActive: data.isActive,
       };
 
       return res.status(201).json({
