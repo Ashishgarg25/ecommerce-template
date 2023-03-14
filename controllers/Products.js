@@ -127,7 +127,6 @@ const updateProduct = async (req, res) => {
       });
     }
 
-
     if (name) product.name = name;
     if (slug) product.slug = slug;
     if (description) product.description = description;
@@ -138,24 +137,9 @@ const updateProduct = async (req, res) => {
     if (is_best_selling) product.is_best_selling = is_best_selling;
     if (is_new_arrival) product.is_new_arrival = is_new_arrival;
     if (isActive) product.isActive = isActive;
-
-    if (tag) {
-      if (product.tag.length > 0) {
-        await product.update({ _id: product._id }, { $push: { tag: tag } });
-      } else product.tag = tag;
-    }
-
-    if (media) {
-      if (product.media.length > 0) {
-        await product.update({ _id: product._id }, { $push: { media: media } });
-      } else product.media = media;
-    }
-
-    if (variants) {
-      if (product.variants.length > 0) {
-        await product.update({ _id: product._id }, { $push: { variants: variants } });
-      } else product.variants = variants;
-    }
+    if (tag) product.tag = tag;
+    if (media) product.media = media;
+    if (variants) product.variants = variants;
 
     const updatedProduct = await product.save();
 

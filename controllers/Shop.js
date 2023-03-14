@@ -114,7 +114,7 @@ const updateShop = async (req, res) => {
     if(logo) shop.logo = logo
     if(phone) shop.phone = phone
     if(address) shop.address = address
-    if(isActive) shop.isActive = isActive
+    // if(isActive) shop.isActive = isActive
     if(website) shop.website = website
   
     const updatedShop = await shop.save();
