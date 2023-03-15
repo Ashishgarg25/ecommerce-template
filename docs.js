@@ -75,7 +75,7 @@ REQ_BODY = {
 };
 
 
-TYPE = "createProduct";
+TYPE = "update";
 
 // SINCE IT CONTAINS IMAGE SEND AS FORMDATA
 

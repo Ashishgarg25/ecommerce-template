@@ -163,8 +163,38 @@ const updateShop = async (req, res) => {
     
   }
 
+  const getShopByName = async(req, res) => {
+    try{
+
+      console.log(req.params)
+
+      const { name } = req.params;
+
+      const shop = await Shop.find({ shop_slug: name })
+
+      if(!shop){
+        return res.status(400).json({
+          variant: "error",
+          msg: "No shop found!",
+        });
+      }
+
+      return res.status(201).json({
+        response: shop,
+      });
+
+    }catch(e){
+      console.log(e);
+      return res.status(500).json({
+        variant: "error",
+        msg: "Something went wrong. Please try again!",
+      });
+  }
+  }
+
 module.exports = {
   createShop,
   updateShop,
   getShopByUserId,
+  getShopByName,
 };
