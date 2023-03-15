@@ -2,11 +2,10 @@ const Blog = require("../models/Blog");
 
 const createBlogPost = async (req, res) => {
   try {
-    const { owner_name, owner, shop, author, title, description, media } =
+    const { owner, shop, author, title, description, media } =
       req.body;
 
     if (
-      !owner_name ||
       !owner ||
       !shop ||
       !author ||
@@ -20,7 +19,6 @@ const createBlogPost = async (req, res) => {
     }
 
     const post = new Blog({
-      owner_name,
       owner,
       shop,
       author,
@@ -29,7 +27,7 @@ const createBlogPost = async (req, res) => {
       media,
     });
 
-    const data = await order.save();
+    const data = await post.save();
 
     if (!data) {
       return res.status(403).json({
@@ -88,7 +86,7 @@ const postById = async (req, res) => {
   try {
     const { _id } = req.body;
 
-    if (!shop) {
+    if (!_id) {
       return res.status(400).json({
         variant: "error",
         msg: "No post found!",
@@ -118,11 +116,10 @@ const postById = async (req, res) => {
 
 const updatePost = async (req, res) => {
   try {
-    const { owner_name, owner, shop, author, title, description, media } =
+    const { owner, shop, author, title, description, media } =
       req.body;
 
     if (
-      !owner_name ||
       !owner ||
       !shop ||
       !author ||
@@ -137,7 +134,7 @@ const updatePost = async (req, res) => {
 
     const post = await Blog.findById(_id);
 
-    if (!shop) {
+    if (!post) {
       return res.status(400).json({
         variant: "error",
         msg: "No posts found!",

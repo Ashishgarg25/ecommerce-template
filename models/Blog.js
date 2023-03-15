@@ -3,10 +3,6 @@ const { Schema, model } = mongoose;
 
 const blogs = new Schema(
   {
-    owner_email: {
-      type: String,
-      required: true,
-    },
     owner: {
       type: String,
       required: true,
