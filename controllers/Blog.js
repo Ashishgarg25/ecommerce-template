@@ -52,16 +52,16 @@ const createBlogPost = async (req, res) => {
 
 const getAllPostsByShop = async (req, res) => {
   try {
-    const { owner, shop } = req.body;
+    const { id } = req.params;
 
-    if (!shop) {
+    if (!id) {
       return res.status(400).json({
         variant: "error",
         msg: "No posts found!",
       });
     }
 
-    const posts = Blog.find({ shop: shop });
+    const posts = Blog.find({ shop: id });
 
     if (!posts) {
       return res.status(400).json({
@@ -84,16 +84,16 @@ const getAllPostsByShop = async (req, res) => {
 
 const postById = async (req, res) => {
   try {
-    const { _id } = req.body;
+    const { id } = req.params;
 
-    if (!_id) {
+    if (!id) {
       return res.status(400).json({
         variant: "error",
         msg: "No post found!",
       });
     }
 
-    const post = Blog.findById({ _id });
+    const post = Blog.findById({ _id: id });
 
     if (!post) {
       return res.status(400).json({

@@ -4,8 +4,8 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 
 router.post("/createPost", auth, createBlogPost);
-router.get("/", getAllPostsByShop);
-router.get("/single", postById);
+router.get("/:id", getAllPostsByShop);
+router.get("/single/:id", postById);
 router.put("/update", auth, updatePost);
 router.delete("/delete", auth, deletePost);
 
