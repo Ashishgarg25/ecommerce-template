@@ -181,6 +181,7 @@ const getAllProducts = async(req, res) => {
       newProduct.push({
         _id: item?._id,
         name: item?.name,
+        slug: item?.slug,
         media: item?.media,
         price: item?.price,
         sale_price: item?.sale_price,
