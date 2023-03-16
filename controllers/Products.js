@@ -180,6 +180,7 @@ const getAllProducts = async(req, res) => {
     products?.map(item => {
       newProduct.push({
         _id: item?._id,
+        shop: item?.shop,
         name: item?.name,
         slug: item?.slug,
         media: item?.media,
