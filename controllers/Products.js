@@ -157,16 +157,16 @@ const updateProduct = async (req, res) => {
 
 const getAllProducts = async(req, res) => {
   try{
-    const { shop } = req.body;
+    const { id } = req.params;
 
-    if(!shop){
+    if(!id){
       return res.status(400).json({
         variant: "error",
         msg: "No product found!",
       });
     }
 
-    const products = Product.find({ shop: shop })
+    const products = await Product.find({ shop: id })
 
     if(!products){
       return res.status(400).json({
