@@ -170,7 +170,7 @@ const updateShop = async (req, res) => {
 
       const { name } = req.params;
 
-      const shop = await Shop.find({ shop_slug: name })
+      const shop = await Shop.findOne({ shop_slug: name })
 
       if(!shop){
         return res.status(400).json({
