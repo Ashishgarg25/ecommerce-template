@@ -175,8 +175,24 @@ const getAllProducts = async(req, res) => {
       });
     }
 
+    const newProduct = [];
+
+    products?.map(item => {
+      newProduct.push({
+        _id: item?._id,
+        name: item?.name,
+        media: item?.media,
+        price: item?.price,
+        sale_price: item?.sale_price,
+        is_best_selling: item?.is_best_selling,
+        is_new_arrival: item?.is_new_arrival,
+        variants: item?.variants,
+        quantity: item.quantity
+      })
+    })
+
     return res.status(201).json({
-      response: products,
+      response: newProduct,
     });
 
   } catch (e) {
@@ -190,16 +206,16 @@ const getAllProducts = async(req, res) => {
 
 const productById = async(req, res) => {
     try{
-      const { shop, _id } = req.body;
+      const { id } = req.params;
 
-      if(!shop || !_id){
+      if(!id){
         return res.status(400).json({
           variant: "error",
           msg: "No product found!",
         });
       }
 
-      const product = Product.findById({ _id })
+      const product = await Product.findById({ _id: id })
 
       if(!product){
         return res.status(400).json({
