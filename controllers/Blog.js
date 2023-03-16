@@ -61,7 +61,7 @@ const getAllPostsByShop = async (req, res) => {
       });
     }
 
-    const posts = Blog.find({ shop: id });
+    const posts = await Blog.find({ shop: id });
 
     if (!posts) {
       return res.status(400).json({
