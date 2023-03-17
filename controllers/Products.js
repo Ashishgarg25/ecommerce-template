@@ -189,7 +189,8 @@ const getAllProducts = async(req, res) => {
         is_best_selling: item?.is_best_selling,
         is_new_arrival: item?.is_new_arrival,
         variants: item?.variants,
-        quantity: item.quantity
+        quantity: item.quantity,
+        tag: item?.tag
       })
     })
 
