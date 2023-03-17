@@ -5,7 +5,7 @@ const createOrder = async (req, res) => {
     const {
       shop,
       owner,
-      owner_email,
+      userId,
       product,
       total,
       shipping_fees,
@@ -17,7 +17,7 @@ const createOrder = async (req, res) => {
     if (
       !shop ||
       !owner ||
-      !owner_email ||
+      !userId ||
       product.length === 0 ||
       !total ||
       !shipping_fees ||
@@ -32,7 +32,7 @@ const createOrder = async (req, res) => {
     const order = new Order({
         shop,
         owner,
-        owner_email,
+        userId,
         product,
         total,
         shipping_fees,
@@ -71,7 +71,7 @@ const updateOrder = async (req, res) => {
     const {
         shop,
         owner,
-        owner_email,
+        userId,
         product,
         total,
         shipping_fees,
@@ -85,7 +85,7 @@ const updateOrder = async (req, res) => {
     if (
         !shop ||
         !owner ||
-        !owner_email ||
+        !userId ||
         product.length === 0 ||
         !total ||
         !shipping_fees ||
@@ -124,16 +124,48 @@ const updateOrder = async (req, res) => {
 
 const getAllOrders = async (req, res) => {
   try {
-    const { shop } = req.body;
+    const { id } = req.params;
 
-    if (!shop) {
+    if (!id) {
       return res.status(400).json({
         variant: "error",
         msg: "No orders found!",
       });
     }
 
-    const orders = Order.find({ shop: shop });
+    const orders = await Order.find({ shop: id });
+
+    if (!orders) {
+      return res.status(400).json({
+        variant: "error",
+        msg: "No orders found!",
+      });
+    }
+
+    return res.status(201).json({
+      response: orders,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      variant: "error",
+      msg: "Something went wrong. Please try again!",
+    });
+  }
+};
+
+const getAllOrdersForUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        variant: "error",
+        msg: "No orders found!",
+      });
+    }
+
+    const orders = await Order.find({ userId: id });
 
     if (!orders) {
       return res.status(400).json({
@@ -156,16 +188,16 @@ const getAllOrders = async (req, res) => {
 
 const orderById = async (req, res) => {
   try {
-    const { shop, _id } = req.body;
+    const { id } = req.params;
 
-    if (!shop || !_id) {
+    if (!id) {
       return res.status(400).json({
         variant: "error",
         msg: "No order found!",
       });
     }
 
-    const order = Order.findById({ _id });
+    const order = Order.findById({ _id: id });
 
     if (!order) {
       return res.status(400).json({
@@ -191,4 +223,5 @@ module.exports = {
   updateOrder,
   orderById,
   getAllOrders,
+  getAllOrdersForUser
 };

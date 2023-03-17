@@ -21,11 +21,11 @@ const order_status = new Schema({
 
 const orders = new Schema(
   {
-    owner_email: {
+    owner: {
       type: String,
       required: true,
     },
-    owner: {
+    userId: {
       type: String,
       required: true,
     },
