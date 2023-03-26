@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 const role_types = Object.freeze({
-  customer: "customer",
-  admin: "admin",
+  USER: "USER",
+  ADMIN: "ADMIN",
 });
 
 const users = new Schema(

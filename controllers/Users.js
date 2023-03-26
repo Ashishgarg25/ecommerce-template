@@ -4,9 +4,12 @@ const bcrypt = require("bcrypt");
 
 const signup = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, address, phone, basket } = req.body;
+
+    
 
     if (!name || !email || !password) {
+      console.log('body =====', req.body)
       return res
         .status(404)
         .json({ variant: "error", msg: "Please enter mandatory fields!" });
@@ -18,6 +21,9 @@ const signup = async (req, res) => {
       name,
       email,
       role,
+      address: [],
+      phone: '',
+      basket: basket,
       password: hashedPassword,
       isActive: true,
     });
@@ -29,6 +35,7 @@ const signup = async (req, res) => {
       );
 
       const response = {
+        _id: data._id,
         name,
         email,
         role,
@@ -82,6 +89,7 @@ const signin = async (req, res) => {
     );
 
     return res.status(201).json({
+      _id: data?._id,
       name: data.name,
       email: data.email,
       role: data.role,

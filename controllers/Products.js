@@ -59,7 +59,7 @@ const createProduct = async (req, res) => {
 
     const data = await product.save();
 
-    if(!data){
+    if (!data) {
       return res.status(403).json({
         variant: "error",
         msg: "Something went wrong. Please try again!",
@@ -69,9 +69,8 @@ const createProduct = async (req, res) => {
     return res.status(500).json({
       variant: "success",
       msg: "Product Added Successfully!",
-      data
+      data,
     });
-
   } catch (e) {
     console.log(e);
     return res.status(500).json({
@@ -123,7 +122,8 @@ const updateProduct = async (req, res) => {
     const product = await Product.findById(_id);
     if (!product) {
       return res.status(400).json({
-        variant: "error", msg: "No product found!"
+        variant: "error",
+        msg: "No product found!",
       });
     }
 
@@ -155,20 +155,20 @@ const updateProduct = async (req, res) => {
   }
 };
 
-const getAllProducts = async(req, res) => {
-  try{
+const getAllProducts = async (req, res) => {
+  try {
     const { id } = req.params;
 
-    if(!id){
+    if (!id) {
       return res.status(400).json({
         variant: "error",
         msg: "No product found!",
       });
     }
 
-    const products = await Product.find({ shop: id })
+    const products = await Product.find({ shop: id });
 
-    if(!products){
+    if (!products) {
       return res.status(400).json({
         variant: "error",
         msg: "No product found!",
@@ -177,7 +177,7 @@ const getAllProducts = async(req, res) => {
 
     const newProduct = [];
 
-    products?.map(item => {
+    products?.map((item) => {
       newProduct.push({
         _id: item?._id,
         shop: item?.shop,
@@ -190,62 +190,62 @@ const getAllProducts = async(req, res) => {
         is_new_arrival: item?.is_new_arrival,
         variants: item?.variants,
         quantity: item.quantity,
-        tag: item?.tag
-      })
-    })
+        tag: item?.tag,
+      });
+    });
 
     return res.status(201).json({
       response: newProduct,
     });
-
   } catch (e) {
-  console.log(e);
-  return res.status(500).json({
-    variant: "error",
-    msg: "Something went wrong. Please try again!",
-  });
-}
-}
-
-const productById = async(req, res) => {
-    try{
-      const { id } = req.params;
-
-      if(!id){
-        return res.status(400).json({
-          variant: "error",
-          msg: "No product found!",
-        });
-      }
-
-      const product = await Product.findById({ _id: id })
-
-      if(!product){
-        return res.status(400).json({
-          variant: "error",
-          msg: "No product found!",
-        });
-      }
-
-      return res.status(201).json({
-        response: product,
-      });
-
-    } catch (e) {
     console.log(e);
     return res.status(500).json({
       variant: "error",
       msg: "Something went wrong. Please try again!",
     });
   }
-}
+};
+
+const productById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({
+        variant: "error",
+        msg: "No product found!",
+      });
+    }
+
+    const product = await Product.findById({ _id: id });
+
+    if (!product) {
+      return res.status(400).json({
+        variant: "error",
+        msg: "No product found!",
+      });
+    }
+
+    return res.status(201).json({
+      response: product,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      variant: "error",
+      msg: "Something went wrong. Please try again!",
+    });
+  }
+};
 
 const deleteProduct = async (req, res) => {
   try {
     const { shop, _id } = req.body;
 
     if (!shop || !_id) {
-      return res.status(404).json({ variant: "error", msg: "No product found!" });
+      return res
+        .status(404)
+        .json({ variant: "error", msg: "No product found!" });
     }
 
     const isDeleted = await Product.findOneAndRemove({ _id });
@@ -274,10 +274,56 @@ const deleteProduct = async (req, res) => {
   }
 };
 
+const searchProducts = async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    if (!name) {
+      return res.status(400).json({
+        variant: "error",
+        msg: "No product found!",
+      });
+    }
+
+
+    const filteredProducts = [];
+
+    const searchRes = await Product.find({'name' : new RegExp(name, 'i')});
+
+    searchRes?.map(item => {
+      filteredProducts.push({
+        _id: item?._id,
+        shop: item?.shop,
+        name: item?.name,
+        slug: item?.slug,
+        media: item?.media,
+        price: item?.price,
+        sale_price: item?.sale_price,
+        is_best_selling: item?.is_best_selling,
+        is_new_arrival: item?.is_new_arrival,
+        variants: item?.variants,
+        quantity: item.quantity,
+        tag: item?.tag,
+      });
+    })
+
+    return res.status(201).json({
+      response: filteredProducts,
+    });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json({
+      variant: "error",
+      msg: "Something went wrong. Please try again!",
+    });
+  }
+};
+
 module.exports = {
   createProduct,
   updateProduct,
   deleteProduct,
   productById,
   getAllProducts,
+  searchProducts,
 };
